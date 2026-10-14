@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GasTrack Capstone — 20 Antigravity Prompts for Backend Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(99, 102, 241, 0.4);
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --text-dim: #6B7280;
+      --accent: #10B981;
+      --accent-glow: rgba(16, 185, 129, 0.25);
+      --primary: #6366F1;
+      --primary-hover: #4F46E5;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --warning: #F59E0B;
+      --cyan: #06B6D4;
+      --code-bg: #030712;
+      --code-border: rgba(255, 255, 255, 0.06);
+      --radius: 16px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.09) 0%, transparent 45%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 9999px;
+      color: #A5B4FC;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #FFFFFF 30%, #A5B4FC 70%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 750px;
+      margin: 0 auto 28px;
+    }
+
+    /* TOP STATS & PROGRESS BAR */
+    .dashboard-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #6366F1, #10B981);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 20px;
+    }
+
+    .rule-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 0.88rem;
+    }
+
+    .rule-card strong {
+      color: #F9FAFB;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .rule-card p {
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* FILTERS & SEARCH */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1 1 280px;
+      max-width: 400px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px 10px 38px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    /* PROMPTS LIST */
+    .prompts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .prompt-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .prompt-card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .prompt-card.completed {
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.03);
+    }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .prompt-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .prompt-number {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #A5B4FC;
+      border-radius: 6px;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      letter-spacing: 0.5px;
+    }
+
+    .prompt-milestone {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .prompt-card.completed .prompt-number {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6EE7B7;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .prompt-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #F9FAFB;
+      margin-top: 4px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-container:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .checkbox-container input {
+      cursor: pointer;
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+
+    .checkbox-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .prompt-card.completed .checkbox-label {
+      color: var(--accent);
+    }
+
+    /* LEARNING OUTCOME */
+    .learning-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(6, 182, 212, 0.06);
+      border-left: 3px solid var(--cyan);
+      padding: 10px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.86rem;
+      color: #CFFAFE;
+      margin-bottom: 16px;
+    }
+
+    .learning-box svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* CODE & PROMPT BOX */
+    .code-container {
+      position: relative;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--code-border);
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-dim);
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #C7D2FE;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .copy-btn.copied {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #064E3B;
+    }
+
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #E5E7EB;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 30px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      body {
+        padding: 24px 14px 60px;
+      }
+      h1 {
+        font-size: 2.1rem;
+      }
+      .prompt-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .checkbox-container {
+        align-self: flex-start;
+      }
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-box {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="badge-pill">Antigravity AI Mastery • Capstone Project</div>
+      <h1>GasTrack Backend Service</h1>
+      <p class="subtitle">
+        A structured, 20-step interactive AI prompting companion designed to guide you from basic FastAPI routing to a smart, predictive gas consumption and delivery platform.
+      </p>
+    </header>
+
+    <!-- DASHBOARD PROGRESS & RULES -->
+    <div class="dashboard-panel">
+      <div class="progress-header">
+        <span>Capstone Completion Progress</span>
+        <span id="progress-text">0 / 20 Completed (0%)</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rule-card">
+          <strong>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            1. Never Blindly Copy
+          </strong>
+          <p>Always ask Antigravity: <em>"Explain lines X to Y to me like a beginner"</em> before adding any code to your project.</p>
+        </div>
+        <div class="rule-card">
+          <strong>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            2. Break It On Purpose
+          </strong>
+          <p>Test bad inputs in Swagger UI (e.g. negative prices or empty strings) to see your Pydantic validations catch them.</p>
+        </div>
+        <div class="rule-card">
+          <strong>
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+            </svg>
+            3. Commit Every Milestone
+          </strong>
+          <p>Run <code>git commit</code> and push after completing each milestone so your GitHub profile exhibits continuous growth.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLS: SEARCH & FILTER TABS -->
+    <div class="controls">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search prompts (e.g. SQLAlchemy, Enum, test)..." oninput="filterPrompts()" />
+      </div>
+
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="tab-btn active" data-filter="all" onclick="setFilter('all')">All (20)</button>
+        <button class="tab-btn" data-filter="m1" onclick="setFilter('m1')">M1: Schemas (1-4)</button>
+        <button class="tab-btn" data-filter="m2" onclick="setFilter('m2')">M2: FastAPI CRUD (5-8)</button>
+        <button class="tab-btn" data-filter="m3" onclick="setFilter('m3')">M3: Database & ORM (9-12)</button>
+        <button class="tab-btn" data-filter="m4" onclick="setFilter('m4')">M4: Estimation Engine (13-16)</button>
+        <button class="tab-btn" data-filter="m5" onclick="setFilter('m5')">M5: Dispatch & Alerts (17-18)</button>
+        <button class="tab-btn" data-filter="m6" onclick="setFilter('m6')">M6: Testing & Deploy (19-20)</button>
+      </div>
+    </div>
+
+    <!-- PROMPTS CONTAINER -->
+    <div class="prompts-list" id="prompts-container">
+
+      <!-- PROMPT 1 -->
+      <div class="prompt-card" data-milestone="m1" id="card-1">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #01</span>
+              <span class="prompt-milestone">Milestone 1 • Domain Modeling & Schemas</span>
+            </div>
+            <h2 class="prompt-title">System Architecture & Folder Structure</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(1)" id="chk-1" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+          <span><strong>What You Learn:</strong> How real-world backend applications organize routers, schemas, models, and services cleanly.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-1', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-1">I am designing a backend REST API in FastAPI for an on-demand cooking gas refill and delivery service with a consumption tracking feature.
+
+Core Entities:
+1. Gas Station (name, address, coordinates, price per kg, available cylinder sizes).
+2. Cylinder / Refill Log (cylinder size in kg, refill date, user ID, cost).
+3. Delivery Order (user ID, station ID, driver ID, pickup address, delivery status, timestamp).
+4. User Consumption Profile (household size, cooking frequency per day, typical appliances used).
+
+Please suggest a clean directory structure for this project following standard FastAPI best practices. Explain the purpose of each folder (routers, schemas, models, services, core) and how they interact.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 2 -->
+      <div class="prompt-card" data-milestone="m1" id="card-2">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #02</span>
+              <span class="prompt-milestone">Milestone 1 • Domain Modeling & Schemas</span>
+            </div>
+            <h2 class="prompt-title">Station & Pricing Pydantic Schemas</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(2)" id="chk-2" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Model inheritance, field validation rules (e.g. price > 0), and response formatting.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-2', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-2">I have learned Pydantic v2 and need to write data validation schemas for Gas Stations in my gas delivery app.
+
+Requirements:
+- StationBase: station name, address, contact phone, price_per_kg (must be > 0), supported cylinder sizes (e.g. [6, 12.5, 25, 50] kg), and is_active flag.
+- StationCreate: schema for creating a station (inherits from StationBase).
+- StationResponse: includes an integer `id` and `created_at` timestamp, configured to work with ORM models (`from_attributes = True`).
+
+Write these Pydantic models with clear type annotations, Field descriptions, and validation rules.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 3 -->
+      <div class="prompt-card" data-milestone="m1" id="card-3">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #03</span>
+              <span class="prompt-milestone">Milestone 1 • Domain Modeling & Schemas</span>
+            </div>
+            <h2 class="prompt-title">Refill History & Cooking Profile Schemas</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(3)" id="chk-3" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Custom validators with <code>@field_validator</code> to restrict input to approved cylinder sizes.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-3', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-3">I need Pydantic models for tracking user gas usage.
+
+Write schemas for:
+1. UserUsageProfile:
+   - household_size: int (must be at least 1)
+   - meals_cooked_per_day: float (e.g., 2.5)
+   - uses_oven: bool
+   - primary_cylinder_size_kg: float (e.g., 12.5)
+2. RefillLogCreate:
+   - cylinder_size_kg: float
+   - refill_date: datetime
+   - station_id: int
+   - amount_paid: float
+3. RefillLogResponse: includes log `id` and `user_id`.
+
+Include custom validation to ensure cylinder_size_kg is one of standard sizes [3, 6, 12.5, 25, 50].</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 4 -->
+      <div class="prompt-card" data-milestone="m1" id="card-4">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #04</span>
+              <span class="prompt-milestone">Milestone 1 • Domain Modeling & Schemas</span>
+            </div>
+            <h2 class="prompt-title">Order Lifecycle States & Enums</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(4)" id="chk-4" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Using Python's <code>Enum</code> module to guarantee only valid order states can ever exist in your API.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-4', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-4">In my gas refill platform, orders move through distinct stages.
+
+1. Create a Python `Enum` named `OrderStatus` with states:
+   - PENDING
+   - DRIVER_ASSIGNED
+   - CYLINDER_PICKED_UP
+   - REFILLING_AT_STATION
+   - OUT_FOR_DELIVERY
+   - COMPLETED
+   - CANCELLED
+
+2. Create Pydantic schemas:
+   - OrderCreate: cylinder_size_kg, pickup_address, delivery_address, preferred_station_id (optional).
+   - OrderUpdateStatus: only allows updating the order status and optional notes.
+   - OrderResponse: full order details including current status, assigned driver ID, estimated total price, and timestamps.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 5 -->
+      <div class="prompt-card" data-milestone="m2" id="card-5">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #05</span>
+              <span class="prompt-milestone">Milestone 2 • FastAPI & In-Memory CRUD</span>
+            </div>
+            <h2 class="prompt-title">In-Memory Station Router & Query Filters</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(5)" id="chk-5" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Setting up an <code>APIRouter</code>, handling path/query parameters, and raising <code>HTTPException(404)</code>.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-5', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-5">I am building my Week 4 FastAPI assignment. I do not have a database set up yet, so I want to manage Gas Stations using an in-memory Python dictionary or list.
+
+Create a FastAPI `APIRouter` for `/stations` with:
+- `POST /stations/`: Create a new station (generates auto-increment ID).
+- `GET /stations/`: List all stations, with optional query parameters to filter by `max_price_per_kg` and `min_cylinder_size`.
+- `GET /stations/{station_id}`: Fetch single station or raise HTTPException(404) if not found.
+
+Use the Pydantic schemas we defined earlier. Include docstrings and comments explaining how the in-memory store works.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 6 -->
+      <div class="prompt-card" data-milestone="m2" id="card-6">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #06</span>
+              <span class="prompt-milestone">Milestone 2 • FastAPI & In-Memory CRUD</span>
+            </div>
+            <h2 class="prompt-title">In-Memory Order Creation & Price Estimation</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(6)" id="chk-6" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Returning proper HTTP 201 Created headers and generating automated calculation fields.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-6', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-6">I want to create a router for customer Orders (`/orders`) using in-memory storage.
+
+Requirements:
+- `POST /orders/`: Accepts `OrderCreate`, automatically sets initial status to `PENDING`, sets `created_at` to current UTC time, calculates an estimated total based on cylinder size and an assumed price rate, stores the order in a dictionary, and returns `OrderResponse` with HTTP 201 Created status.
+- `GET /orders/`: Returns all orders.
+- `GET /orders/{order_id}`: Returns a specific order or 404.
+
+Show me the complete router code and how to register it in `main.py`.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 7 -->
+      <div class="prompt-card" data-milestone="m2" id="card-7">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #07</span>
+              <span class="prompt-milestone">Milestone 2 • FastAPI & In-Memory CRUD</span>
+            </div>
+            <h2 class="prompt-title">State Machine Validation in Route Handlers</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(7)" id="chk-7" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Business logic defensive checks: preventing drivers from skipping order states.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-7', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-7">I need an endpoint `PATCH /orders/{order_id}/status` that allows a driver or admin to update the status of a gas refill order.
+
+Business Rule:
+The order can only transition in logical sequence:
+- PENDING -> DRIVER_ASSIGNED -> CYLINDER_PICKED_UP -> REFILLING_AT_STATION -> OUT_FOR_DELIVERY -> COMPLETED.
+- CANCELLED is only allowed if the current status is PENDING or DRIVER_ASSIGNED.
+
+Write this endpoint. If an invalid status transition is attempted (e.g. PENDING straight to COMPLETED), return `HTTPException(status_code=400, detail="Invalid status transition")`.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 8 -->
+      <div class="prompt-card" data-milestone="m2" id="card-8">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #08</span>
+              <span class="prompt-milestone">Milestone 2 • FastAPI & In-Memory CRUD</span>
+            </div>
+            <h2 class="prompt-title">OpenAPI /docs Customization & Testing Guide</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(8)" id="chk-8" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Polishing API documentation tags, descriptions, and verifying flows via Swagger UI.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-8', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-8">I have built my in-memory FastAPI app with `/stations` and `/orders`.
+
+1. How do I customize FastAPI app metadata (title, description, version, tags) in `FastAPI(...)` to make `/docs` look professional?
+2. Write a step-by-step testing guide for me to open Swagger UI at `http://127.0.0.1:8000/docs` and test the complete workflow:
+   - Create a station
+   - Query stations
+   - Place an order
+   - Update order status step-by-step</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 9 -->
+      <div class="prompt-card" data-milestone="m3" id="card-9">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #09</span>
+              <span class="prompt-milestone">Milestone 3 • Database & SQLAlchemy ORM</span>
+            </div>
+            <h2 class="prompt-title">Database Setup & Dependency Injection (get_db)</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(9)" id="chk-9" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Database connection pooling, session lifecycle, and why generator <code>yield</code> is used.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-9', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-9">I am ready to move from in-memory dictionaries to SQLite using SQLAlchemy 2.0 and FastAPI.
+
+Please write:
+1. `database.py`: Sets up `create_engine`, `sessionmaker`, and the declarative `Base` class.
+2. The `get_db()` dependency function using `yield` for route injection.
+3. An explanation of why the session must be closed in a `finally` block and how FastAPI handles this automatically.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 10 -->
+      <div class="prompt-card" data-milestone="m3" id="card-10">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #10</span>
+              <span class="prompt-milestone">Milestone 3 • Database & SQLAlchemy ORM</span>
+            </div>
+            <h2 class="prompt-title">SQLAlchemy 2.0 ORM Models & Relationships</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(10)" id="chk-10" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Modern typed ORM definitions with <code>Mapped[...]</code> and relational Foreign Keys.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-10', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-10">Write SQLAlchemy ORM models for my gas refill platform:
+1. `Station`: id, name, address, price_per_kg, supported_sizes (JSON or string).
+2. `User`: id, name, email (unique), phone.
+3. `RefillLog`: id, user_id (ForeignKey to user), cylinder_size_kg, refill_date, amount_paid.
+4. `Order`: id, user_id (ForeignKey to user), station_id (ForeignKey to station, nullable), status, pickup_address, delivery_address, created_at.
+
+Use modern SQLAlchemy 2.0 `Mapped` and `mapped_column` syntax and define `relationship` between User, RefillLog, and Order.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 11 -->
+      <div class="prompt-card" data-milestone="m3" id="card-11">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #11</span>
+              <span class="prompt-milestone">Milestone 3 • Database & SQLAlchemy ORM</span>
+            </div>
+            <h2 class="prompt-title">Migrating Stations Router to Database Session</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(11)" id="chk-11" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Replacing in-memory lookups with <code>db.execute(select(...))</code> and handling transactions.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-11', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-11">Here is my in-memory station router code from earlier:
+[PASTE YOUR IN-MEMORY ROUTER CODE HERE]
+
+Refactor this router to persist data in SQLite using SQLAlchemy ORM and the `db: Session = Depends(get_db)` pattern.
+Ensure:
+- Inserting a new record adds, commits, and refreshes the model.
+- Querying uses the modern `select()` syntax of SQLAlchemy 2.0.
+- Proper 404 handling if a record is missing.
+Explain every change you made compared to the in-memory version.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 12 -->
+      <div class="prompt-card" data-milestone="m3" id="card-12">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #12</span>
+              <span class="prompt-milestone">Milestone 3 • Database & SQLAlchemy ORM</span>
+            </div>
+            <h2 class="prompt-title">Refill History Log Endpoints with Relationships</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(12)" id="chk-12" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Creating sub-resource routes (`/users/{id}/refills`) and sorting records by descending timestamps.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-12', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-12">Create a router for Refill Logs (`/refills`):
+- `POST /users/{user_id}/refills`: Records a newly completed gas refill for a user in the database.
+- `GET /users/{user_id}/refills`: Returns the history of all refills for that user, sorted with the most recent first (`order_by(RefillLog.refill_date.desc())`).
+
+Include the Pydantic schemas and database models, ensuring the endpoint returns properly typed responses.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 13 -->
+      <div class="prompt-card" data-milestone="m4" id="card-13">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #13</span>
+              <span class="prompt-milestone">Milestone 4 • Smart Prediction Engine</span>
+            </div>
+            <h2 class="prompt-title">Mathematical Burn-Rate Formulation & Cold Start</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(13)" id="chk-13" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Designing pure Python service modules separated from HTTP frameworks.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-13', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-13">I want to build the consumption estimation engine. Let's design the pure Python calculation logic before writing the API endpoint.
+
+We have two scenarios:
+Scenario A (New User - Cold Start):
+The user only has their usage profile: `household_size`, `meals_cooked_per_day`, `uses_oven`, and `cylinder_size_kg`.
+How can we estimate their daily consumption rate in kg/day using empirical baseline heuristics?
+
+Scenario B (Returning User - Historical Data):
+The user has 2 or more past refill dates in `RefillLog`.
+How do we calculate the actual observed burn rate: `days_between_refills` and `kg_consumed_per_day`?
+
+Write a Python service module `estimation_service.py` with clean, documented functions that handle both scenarios.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 14 -->
+      <div class="prompt-card" data-milestone="m4" id="card-14">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #14</span>
+              <span class="prompt-milestone">Milestone 4 • Smart Prediction Engine</span>
+            </div>
+            <h2 class="prompt-title">Cylinder Health & Runout Date Predictor</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(14)" id="chk-14" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Date arithmetic with <code>timedelta</code>, percentage calculation, and boundary clipping.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-14', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-14">Expand `estimation_service.py` to calculate current cylinder status.
+
+Given:
+- `last_refill_date`: datetime of the most recent refill.
+- `cylinder_size_kg`: float (e.g. 12.5).
+- `daily_burn_rate_kg`: float calculated from Prompt 13.
+- `current_date`: datetime (defaults to now).
+
+Write a function `calculate_cylinder_health(...)` that returns:
+1. `days_elapsed`: days since last refill.
+2. `estimated_gas_used_kg`: float.
+3. `estimated_gas_remaining_kg`: float (cannot be less than 0).
+4. `percentage_remaining`: float (between 0% and 100%).
+5. `estimated_days_left`: int.
+6. `predicted_runout_date`: date.
+7. `status`: "HEALTHY" (> 25%), "LOW" (10% - 25%), "CRITICAL" (< 10%).
+
+Include test cases covering edge cases (e.g. gas should have run out 3 days ago).</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 15 -->
+      <div class="prompt-card" data-milestone="m4" id="card-15">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #15</span>
+              <span class="prompt-milestone">Milestone 4 • Smart Prediction Engine</span>
+            </div>
+            <h2 class="prompt-title">Cylinder Status REST API Endpoint</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(15)" id="chk-15" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Combining database lookups with your service algorithm to return real-time predictions.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-15', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-15">Now expose the estimation service via a FastAPI endpoint:
+`GET /users/{user_id}/cylinder-status`
+
+The endpoint should:
+1. Fetch the user's latest `RefillLog` from the database.
+2. Fetch the user's `UsageProfile` (if available).
+3. If no refills exist, return a friendly message: "No refill history yet. Please log your first refill."
+4. If refills exist, pass the data to `calculate_cylinder_health` and return a structured Pydantic response: `CylinderStatusResponse`.
+
+Show me the complete router code, Pydantic response schema, and how to test it.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 16 -->
+      <div class="prompt-card" data-milestone="m4" id="card-16">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #16</span>
+              <span class="prompt-milestone">Milestone 4 • Smart Prediction Engine</span>
+            </div>
+            <h2 class="prompt-title">Handling Real-World Variance & User Calibration</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(16)" id="chk-16" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Handling anomalies (e.g. holidays or heavy catering) without destroying past averages.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-16', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-16">What happens if a user didn't cook for 2 weeks because they traveled, or had guests and used more gas than usual?
+
+Design a feature that allows a user to "calibrate" or adjust their status:
+- Endpoint: `POST /users/{user_id}/adjust-usage`
+- Accepts: `adjustment_reason` (e.g. "WAS_AWAY", "HEAVY_USAGE_EVENT") or a direct estimated percentage input.
+
+Provide recommendations on how to handle noisy real-world data in a consumption estimation model, and write the code for this adjustment endpoint.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 17 -->
+      <div class="prompt-card" data-milestone="m5" id="card-17">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #17</span>
+              <span class="prompt-milestone">Milestone 5 • Discovery & Proactive Alerts</span>
+            </div>
+            <h2 class="prompt-title">Nearby Station Discovery with Haversine Formula</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(17)" id="chk-17" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Calculating distances using coordinate math and sorting by dynamic computed values.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-17', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-17">I want customers to view stations near them sorted by cheapest price or closest distance.
+
+Assume each station has `latitude: float` and `longitude: float`.
+Write an endpoint:
+`GET /stations/nearby?user_lat=...&user_lon=...&max_distance_km=10&cylinder_size=12.5`
+
+1. Use the Haversine formula in Python to calculate distance between user coordinates and station coordinates.
+2. Filter out stations that do not support the requested cylinder size.
+3. Return the stations sorted by price per kg, with the calculated distance included in the response.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 18 -->
+      <div class="prompt-card" data-milestone="m5" id="card-18">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #18</span>
+              <span class="prompt-milestone">Milestone 5 • Discovery & Proactive Alerts</span>
+            </div>
+            <h2 class="prompt-title">Proactive Low Gas Alerts with BackgroundTasks</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(18)" id="chk-18" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Triggering non-blocking background jobs using FastAPI's built-in <code>BackgroundTasks</code>.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-18', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-18">I want an endpoint that finds all users whose gas is predicted to run out within the next 3 days, so the system can notify them before they run out.
+
+Write an endpoint or service function:
+`POST /admin/generate-restock-alerts`
+
+Logic:
+1. Query all active users who have an active cylinder.
+2. Run `calculate_cylinder_health` for each user.
+3. If `estimated_days_left <= 3`, construct an alert payload:
+   `{"user_id": ..., "user_phone": ..., "days_left": ..., "recommended_stations": [...]}`.
+4. Use FastAPI's `BackgroundTasks` to simulate sending SMS/Push notification alerts without blocking the HTTP response.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 19 -->
+      <div class="prompt-card" data-milestone="m6" id="card-19">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #19</span>
+              <span class="prompt-milestone">Milestone 6 • Testing & Professional Packaging</span>
+            </div>
+            <h2 class="prompt-title">Automated API Testing with Pytest & TestClient</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(19)" id="chk-19" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Writing isolated test fixtures using in-memory SQLite and asserting HTTP status codes.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-19', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-19">I want to write automated tests for my gas delivery API using `pytest` and FastAPI's `TestClient`.
+
+Write tests in `tests/test_api.py` covering:
+1. Test creating a station and querying it.
+2. Test placing an order and verifying its initial status is PENDING.
+3. Test attempting an illegal order status transition (e.g. directly to COMPLETED) and asserting it returns HTTP 400.
+4. Test the cylinder health calculation endpoint for a user with known refill history.
+
+Use an in-memory SQLite database (`sqlite:///:memory:`) for tests so it doesn't affect production data.</pre>
+        </div>
+      </div>
+
+      <!-- PROMPT 20 -->
+      <div class="prompt-card" data-milestone="m6" id="card-20">
+        <div class="prompt-header">
+          <div>
+            <div class="prompt-meta">
+              <span class="prompt-number">Prompt #20</span>
+              <span class="prompt-milestone">Milestone 6 • Testing & Professional Packaging</span>
+            </div>
+            <h2 class="prompt-title">Dockerization & Recruiter-Ready Portfolio README</h2>
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" onchange="toggleComplete(20)" id="chk-20" />
+            <span class="checkbox-label">Completed</span>
+          </label>
+        </div>
+        <div class="learning-box">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          <span><strong>What You Learn:</strong> Creating containerized artifacts and documentation that makes your capstone stand out.</span>
+        </div>
+        <div class="code-container">
+          <div class="code-header">
+            <span>PROMPT FOR ANTIGRAVITY</span>
+            <button class="copy-btn" onclick="copyPrompt('prompt-text-20', this)">Copy Prompt</button>
+          </div>
+          <pre id="prompt-text-20">My capstone API is complete! I want to prepare it for my GitHub portfolio and show recruiters.
+
+1. Write a production-ready `Dockerfile` for this FastAPI project using `python:3.11-slim` and `uvicorn`.
+2. Write a `.dockerignore` file.
+3. Generate a comprehensive, professional `README.md` that includes:
+   - Project overview and architecture diagram (Mermaid).
+   - Key features (Station directory, Delivery state machine, Smart consumption predictor).
+   - How to run locally (`uvicorn main:app --reload`).
+   - How to run with Docker (`docker build` and `docker run`).
+   - Sample API requests and responses.</pre>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Prepared for Your Backend Development Mentorship • Keep Building, Keep Shipping 🚀</p>
+    </footer>
+  </div>
+
+  <script>
+    // LocalStorage Key for Progress
+    const STORAGE_KEY = 'gastrack_prompts_progress';
+
+    function loadProgress() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        for (let i = 1; i <= 20; i++) {
+          const chk = document.getElementById(`chk-${i}`);
+          const card = document.getElementById(`card-${i}`);
+          if (chk && card) {
+            chk.checked = !!saved[i];
+            if (chk.checked) {
+              card.classList.add('completed');
+            } else {
+              card.classList.remove('completed');
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Error loading progress', e);
+      }
+      updateProgressBar();
+    }
+
+    function toggleComplete(id) {
+      const chk = document.getElementById(`chk-${id}`);
+      const card = document.getElementById(`card-${id}`);
+      if (!chk || !card) return;
+
+      if (chk.checked) {
+        card.classList.add('completed');
+      } else {
+        card.classList.remove('completed');
+      }
+
+      saveProgress();
+      updateProgressBar();
+    }
+
+    function saveProgress() {
+      const state = {};
+      for (let i = 1; i <= 20; i++) {
+        const chk = document.getElementById(`chk-${i}`);
+        if (chk && chk.checked) {
+          state[i] = true;
+        }
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function updateProgressBar() {
+      let completed = 0;
+      for (let i = 1; i <= 20; i++) {
+        const chk = document.getElementById(`chk-${i}`);
+        if (chk && chk.checked) completed++;
+      }
+      const pct = Math.round((completed / 20) * 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('progress-text').innerText = `${completed} / 20 Completed (${pct}%)`;
+    }
+
+    // Filter by Milestone Tabs
+    function setFilter(milestone) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach(tab => {
+        if (tab.getAttribute('data-filter') === milestone) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      filterPrompts();
+    }
+
+    // Search and Milestone combined filtering
+    function filterPrompts() {
+      const query = document.getElementById('search-input').value.toLowerCase().trim();
+      const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-filter');
+
+      const cards = document.querySelectorAll('.prompt-card');
+      cards.forEach(card => {
+        const cardMilestone = card.getAttribute('data-milestone');
+        const textContent = card.innerText.toLowerCase();
+
+        const matchesMilestone = (activeTab === 'all' || cardMilestone === activeTab);
+        const matchesQuery = query === '' || textContent.includes(query);
+
+        if (matchesMilestone && matchesQuery) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Copy to clipboard
+    function copyPrompt(elementId, btn) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied! ✓';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.classList.remove('copied');
+        }, 2200);
+      }).catch(err => {
+        console.error('Failed to copy', err);
+      });
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      loadProgress();
+    });
+  </script>
+</body>
+</html>
