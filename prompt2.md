@@ -1,6 +1,6 @@
 # Prompt #02 — Station & Pricing Pydantic Schemas
 
-## 📌 Milestone 1: Domain Modeling & Schemas
+## 📌 Milestone 1: Domain Modeling & Schema
 
 This document contains the complete **Pydantic V2** data validation models for Gas Stations in the **GasTrack** application.
 
